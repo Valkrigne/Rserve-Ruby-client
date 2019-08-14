@@ -13,19 +13,19 @@ module Rserve
         return o if o.is_a? REXP
         return o.to_REXP if o.respond_to? :to_REXP
         case o
-          when TrueClass
+          when ::TrueClass
             REXP::Logical.new(1)
-          when FalseClass
+          when ::FalseClass
             REXP::Logical.new(0)
-          when NilClass
+          when ::NilClass
             REXP::Null.new()
           when ::String
             REXP::String.new(o)
-          when Integer
+          when ::Integer
             REXP::Integer.new(o)
-          when Float
+          when ::Float
             REXP::Double.new(o)
-          when Array
+          when ::Array
             find_type_of_array(o)
           when ::Matrix
             create_matrix(o)
