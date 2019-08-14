@@ -51,9 +51,9 @@ module Rserve
       def self.find_type_of_array(o)
         if o.all? {|v| v.nil?}
           REXP::Integer.new([REXP::Integer::NA]*o.size)
-        elsif o.all? {|v| v.is_a? Integer or v.nil?}
+        elsif o.all? {|v| v.is_a? ::Integer or v.nil?}
           REXP::Integer.new(o.map {|v| v.nil? ? REXP::Integer::NA : v})
-        elsif o.all? {|v| v.is_a? Numeric or v.nil?}
+        elsif o.all? {|v| v.is_a? ::Numeric or v.nil?}
           REXP::Double.new(o.map {|v| v.nil? ? REXP::Double::NA : v.to_f})
         elsif o.all? {|v| v.is_a? ::String or v.nil?}
           REXP::String.new(o.map {|v| v.nil? ? REXP::String::NA : v})
