@@ -13,21 +13,19 @@ module Rserve
         return o if o.is_a? REXP
         return o.to_REXP if o.respond_to? :to_REXP
         case o
-          when TrueClass
+          when ::TrueClass
             REXP::Logical.new(1)
-          when FalseClass
+          when ::FalseClass
             REXP::Logical.new(0)
-          when NilClass
+          when ::NilClass
             REXP::Null.new()
           when ::String
             REXP::String.new(o)
-          when Integer
+          when ::Integer
             REXP::Integer.new(o)
-          when Fixnum
-            REXP::Integer.new(o)
-          when Float
+          when ::Float
             REXP::Double.new(o)
-          when Array
+          when ::Array
             find_type_of_array(o)
           when ::Matrix
             create_matrix(o)
@@ -53,9 +51,9 @@ module Rserve
       def self.find_type_of_array(o)
         if o.all? {|v| v.nil?}
           REXP::Integer.new([REXP::Integer::NA]*o.size)
-        elsif o.all? {|v| v.is_a? Integer or v.is_a? Fixnum or v.nil?}
+        elsif o.all? {|v| v.is_a? ::Integer or v.nil?}
           REXP::Integer.new(o.map {|v| v.nil? ? REXP::Integer::NA : v})
-        elsif o.all? {|v| v.is_a? Numeric or v.nil?}
+        elsif o.all? {|v| v.is_a? ::Numeric or v.nil?}
           REXP::Double.new(o.map {|v| v.nil? ? REXP::Double::NA : v.to_f})
         elsif o.all? {|v| v.is_a? ::String or v.nil?}
           REXP::String.new(o.map {|v| v.nil? ? REXP::String::NA : v})
